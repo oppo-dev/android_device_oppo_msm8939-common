@@ -778,17 +778,38 @@ int main(int argc, char **argv)
     }
     memset(filler, 0, page_size);
 
+    const char *files[] = {
+	"msm8916-mtp-15037.dtb",
+	"msm8916-mtp-15009.dtb",
+	"msm8916-mtp-15035.dtb",
+	"msm8939-mtp-15018.dtb",
+	"msm8939-mtp-15022.dtb",
+	"msm8939-mtp-15011.dtb",
+	"msm8939-mtp-14045.dtb",
+	"msm8939-v3.0-mtp-15022.dtb",
+	"msm8939-v3.0-mtp-15011.dtb",
+	"msm8939-v3.0-mtp-15018.dtb",
+	"msm8939_bc-mtp_15085.dtb"
+    };
+
     /* Open the .dtb files in the specified path, decompile and
        extract "qcom,msm-id" parameter
      */
+#if 0
     while ((dp = readdir(dir)) != NULL) {
-        if ((dp->d_type == DT_REG)) {
-            flen = strlen(dp->d_name);
+		const char *f = dp->d_name;
+        if ((f == DT_REG)) {
+            flen = strlen(f);
             if ((flen > 4) &&
-                (strncmp(&dp->d_name[flen-4], ".dtb", 4) == 0)) {
-                log_info("Found file: %s ... \n", dp->d_name);
+                (strncmp(&f[flen-4], ".dtb", 4) == 0)) {
+#else
+    size_t i;
+    for (i = 0; i < sizeof(files) / sizeof(files[0]); i++) {
+	const char *f = files[i];
+#endif
+                log_info("Found file: %s ... \n", f);
 
-                flen = strlen(input_dir) + strlen(dp->d_name) + 1;
+                flen = strlen(input_dir) + strlen(f) + 1;
                 filename = (char *)malloc(flen);
                 if (!filename) {
                     log_err("Out of memory\n");
@@ -796,7 +817,7 @@ int main(int argc, char **argv)
                     break;
                 }
                 strncpy(filename, input_dir, flen);
-                strncat(filename, dp->d_name, flen);
+                strncat(filename, f, flen);
 
                 /* To identify the version number */
                 msmversion = GetVersionInfo(filename);
@@ -870,8 +891,10 @@ int main(int argc, char **argv)
                     }
                     dtb_count++;
                 }
+#if 0
             }
         }
+#endif
     }
     closedir(dir);
     log_info("=> Found %d unique DTB(s)\n", dtb_count);
