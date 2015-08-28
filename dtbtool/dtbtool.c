@@ -778,6 +778,7 @@ int main(int argc, char **argv)
     }
     memset(filler, 0, page_size);
 
+#ifdef USES_V3_DTB
     const char *files[] = {
 	"msm8916-mtp-15037.dtb",
 	"msm8916-mtp-15009.dtb",
@@ -791,11 +792,12 @@ int main(int argc, char **argv)
 	"msm8939-v3.0-mtp-15018.dtb",
 	"msm8939_bc-mtp_15085.dtb"
     };
+#endif
 
     /* Open the .dtb files in the specified path, decompile and
        extract "qcom,msm-id" parameter
      */
-#if 0
+#ifndef USES_V3_DTB
     while ((dp = readdir(dir)) != NULL) {
 		const char *f = dp->d_name;
         if ((f == DT_REG)) {
@@ -891,7 +893,7 @@ int main(int argc, char **argv)
                     }
                     dtb_count++;
                 }
-#if 0
+#ifndef USES_V3_DTB
             }
         }
 #endif

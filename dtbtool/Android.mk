@@ -9,7 +9,11 @@ LOCAL_SRC_FILES := \
 LOCAL_CFLAGS += \
 	-Wall
 
-## Hybrid v1/v2 dtbTool. Use a different name to avoid conflicts with copies in device repos
+ifeq ($(TARGET_NEEDS_V3_DTB_IMAGE),true)
+LOCAL_CFLAGS += -DUSES_V3_DTB
+endif
+
+## Hybrid v1/v2/v3 dtbTool. Use a different name to avoid conflicts with copies in other repos
 LOCAL_MODULE := dtbToolOppo
 LOCAL_MODULE_TAGS := optional
 
