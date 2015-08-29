@@ -24,60 +24,35 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-#deleted by songxh for oneplus USB devices 
-#ifndef VENDOR_EDIT 
-#Xinhua.Song@OnlineRd.Driver, 2014/04/08, Modify for define OPPO USB devices 
-#import init.qcom.usb.rc
-#else
 import init.oppo.usb.rc
-#endif
-#ifdef VENDOR_EDIT 
-#jiangyg@PM, 2013/10/21, add for OPPO devices 
 import init.oppo.rc
-#endif
-#ifdef VENDOR_EDIT 
-#Zhilong.Zhang@OnlineRd.Driver, 2014/03/12, add for init rc
 import init.oppo.init.rc
-#endif
-
-#yanbin@OnlineRd.framework.oppo_debug, 2015/03/07, add for oppo debug
-import init.oppo.debug.rc
-#endif
-
-#ifdef VENDOR_EDIT
-#Haiping.Zhong@swdp.android.multiscreen, 2015/06/04, Add for POWERMO_SMARTSHOW_SUPPORT multiscreen
-import init.powermo.rc
-#endif
-
-
-
 import init.target.rc
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
 
-#ifdef VENDOR_EDIT
-#Fangfang.Hui@Prd.Android, 2014/06/24, Remove for identify single and double sdcard partion, this will remove to vendor/oppo/common/rootdir/init.oppo.init(.nosd).rc
-#on init
-#    # Set permissions for persist partition
-#    mkdir /persist 0771 system system
-#    # See storage config details at http://source.android.com/tech/storage/
-#    mkdir /mnt/shell/emulated 0700 shell shell
-#    mkdir /storage/emulated 0555 root root
-#    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-#    mkdir /storage/sdcard1 0700 root root
-#
-#    export EXTERNAL_STORAGE /storage/emulated/legacy
-#    export SECONDARY_STORAGE /storage/sdcard1
-#    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-#    export EMULATED_STORAGE_TARGET /storage/emulated
-#
-#    # Support legacy paths
-#    symlink /storage/emulated/legacy /sdcard
-#    symlink /storage/emulated/legacy /mnt/sdcard
-#    symlink /storage/emulated/legacy /storage/sdcard0
-#    symlink /mnt/shell/emulated/0 /storage/emulated/legacy
-#endif
+on init
+    # Set permissions for persist partition
+    mkdir /persist 0771 system system
+    # See storage config details at http://source.android.com/tech/storage/
+    mkdir /mnt/shell/emulated 0700 shell shell
+    mkdir /storage/emulated 0555 root root
+    mkdir /storage/emulated/legacy 0555 root root
+    mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
+    mkdir /storage/sdcard1 0700 root root
+
+    export EXTERNAL_STORAGE /storage/emulated/legacy
+    export SECONDARY_STORAGE /storage/sdcard1
+    export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
+    export EMULATED_STORAGE_TARGET /storage/emulated
+
+    # Support legacy paths
+    symlink /storage/emulated/legacy /sdcard
+    symlink /storage/emulated/legacy /mnt/sdcard
+    symlink /storage/emulated/legacy /storage/sdcard0
+
+    symlink /storage/emulated/legacy /storage/emulated/0
 
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
@@ -341,6 +316,14 @@ on post-fs-data
     chown system system /sys/oppo_ftm/als_prox/algo_wakeup
     chown system system /sys/oppo_ftm/als_prox/algo_info    
     chown system system /sys/oppo_ftm/als_prox/ps_min        
+
+service logcat /system/bin/logcat -f /data/logcat
+    class core
+    oneshot
+
+service logging /system/bin/sh logging.sh
+    class core
+    oneshot
 
 service qcomsysd /system/bin/qcom-system-daemon
     class main
@@ -908,21 +891,17 @@ service profiler_daemon /system/bin/profiler_daemon
     group root
     disabled
 
-#Fangfang.Hui@Prd.Android, 2014/06/24, Remove for identify single and double sdcard partion, this will remove to vendor/oppo/common/rootdir/init.oppo.init(.nosd).rc
-# virtual sdcard daemon running as media_rw (1023)
-#service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
-
-#    class late_start
-#endif
+service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
+    class late_start
 
 #ifdef VENDOR_EDIT
 #Fangfang.Hui@Prd.Android, 2014/05/07, Modify for not start fuse when the volume is not mounted
 #service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
 #    class late_start
 #else
-service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-    class late_start
-    disabled
+#service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
+#    class late_start
+#    disabled
 #endif
 
 #service fuse_uicc0 /system/bin/sdcard -u 1023 -g 1023 -w 1023 -d /mnt/media_rw/uicc0 /storage/uicc0
