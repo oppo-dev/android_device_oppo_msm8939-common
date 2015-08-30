@@ -97,8 +97,8 @@ PRODUCT_PACKAGES += \
     make_ext4fs
 
 # Keystore
-PRODUCT_PACKAGES += \
-    keystore.msm8916
+#PRODUCT_PACKAGES += \
+#    keystore.msm8916
 
 # Media configuration
 PRODUCT_COPY_FILES += \
