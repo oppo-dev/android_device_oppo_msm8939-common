@@ -191,7 +191,7 @@ case "$target" in
     *)
         case "$dserial" in
             "1")
-               start console
+                start console
                 ;;
         esac
         ;;

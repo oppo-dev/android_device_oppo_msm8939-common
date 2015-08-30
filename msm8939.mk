@@ -129,20 +129,44 @@ PRODUCT_PACKAGES += \
 
 # Ramdisk
 PRODUCT_PACKAGES += \
-    fstab.qcom \
-    init.oppo.init.rc \
-    init.oppo.rc \
-    init.oppo.usb.rc \
-    init.qcom.class_core.sh \
-    init.qcom.early_boot.sh \
-    init.qcom.rc \
-    init.qcom.sh \
-    init.qcom.ssr.sh \
-    init.qcom.syspart_fixup.sh \
-    init.qcom.usb.sh \
-    init.qcom.wcnss3660.sh \
+    init.qcom.composition_type.sh \
+    init.target.8x25.sh \
+    init.qcom.mdm_links.sh \
+    init.qcom.modem_links.sh \
+    init.qcom.sensor.sh \
     init.target.rc \
-    ueventd.qcom.rc
+    init.qcom.bt.sh \
+    hsic.control.bt.sh \
+    init.qcom.coex.sh \
+    init.qcom.fm.sh \
+    init.qcom.early_boot.sh \
+    init.qcom.post_boot.sh \
+    init.qcom.syspart_fixup.sh \
+    init.qcom.rc \
+    init.qcom.factory.sh \
+    init.qcom.sdio.sh \
+    init.qcom.sh \
+    init.qcom.class_core.sh \
+    init.class_main.sh \
+    init.qcom.wifi.sh \
+    vold.fstab \
+    init.qcom.ril.path.sh \
+    init.qcom.usb.rc \
+    init.qcom.usb.sh \
+    usf_post_boot.sh \
+    init.qcom.efs.sync.sh \
+    ueventd.qcom.rc \
+    init.ath3k.bt.sh \
+    qca6234-service.sh \
+    init.qcom.audio.sh \
+    ssr_setup \
+    enable_swap.sh \
+    init.mdm.sh \
+    init.qcom.uicc.sh \
+    fstab.qcom \
+    init.qcom.debug.sh \
+    init.qcom.zram.sh \
+    init.qcom.bms.sh
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/rootdir/etc/logging.sh:root/logging.sh

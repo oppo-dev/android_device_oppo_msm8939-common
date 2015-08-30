@@ -48,7 +48,7 @@ on fs
     restorecon_recursive /persist
 
     wait /dev/block/bootdevice/by-name/modem
-    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+    mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
     write /sys/kernel/boot_adsp/boot 1
 
 on post-fs-data
@@ -59,11 +59,6 @@ on post-fs-data
     mkdir /tombstones/dsps 0771 system system
     mkdir /persist/data/sfs 0700 system system
     mkdir /persist/data/tz 0700 system system
-#ifdef VENDOR_EDIT
-#Lycan.Wang@Prd.BasicDrv, 2015-06-11 Add for change SFS_ROOT path
-    mkdir /data/misc/sfs/sfs 0700 system system
-    mkdir /data/misc/sfs/tz 0700 system system
-#endif /* VENDOR_EDIT */
     mkdir /data/misc/dts 0770 media audio
 
 #start camera server as daemon
