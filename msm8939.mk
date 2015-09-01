@@ -143,6 +143,9 @@ PRODUCT_PACKAGES += \
     init.target.rc \
     ueventd.qcom.rc
 
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/rootdir/etc/logging.sh:root/logging.sh
+
 # RIL
 PRODUCT_PACKAGES += \
     libxml2
