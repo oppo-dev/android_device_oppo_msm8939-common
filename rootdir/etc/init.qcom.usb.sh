@@ -118,9 +118,13 @@ case "$usb_config" in
               ;;
               *)
 		case "$target" in
+			#LinJie.Xu@Swdp.Android.USB modify for usb config in ftm mode 2014-05-30    
+			#ifndef VENDOR_EDIT
                         "msm8916")
-                            setprop persist.sys.usb.config diag,serial_smd,rmnet_bam,adb
+                            #setprop persist.sys.usb.config diag,serial_smd,rmnet_bam,adb
+                            setprop persist.sys.usb.config mtp,mass_storage,adb
                         ;;
+			#endif
                         "msm8994")
                             setprop persist.sys.usb.config diag,serial_smd,serial_tty,rmnet_ipa,mass_storage,adb
                         ;;
@@ -138,6 +142,28 @@ case "$usb_config" in
     ;;
     * ) ;; #USB persist config exists, do nothing
 esac
+
+
+#ifndef VENDOR_EDIT  
+#Xinhua.Song@BSP modify for usb config in ftm mode 2014-05-30                  
+ftmmode=`getprop ro.wandrfmode`
+persist_usb=`getprop persist.sys.usb.config`
+case "$ftmmode" in
+     "1")
+	if [ "$persist_usb" != "diag,adb" ]; then
+        	 setprop persist.sys.usb.config diag,adb
+	fi
+     ;;
+     "2")
+	if [ "$persist_usb" != "diag,adb" ]; then
+         	setprop persist.sys.usb.config diag,adb
+	fi
+     ;;
+#     *) 
+#         setprop persist.sys.usb.config diag,serial_smd,rmnet_bam,adb				
+#     ;;
+esac
+#endif
 
 #
 # Do target specific things
