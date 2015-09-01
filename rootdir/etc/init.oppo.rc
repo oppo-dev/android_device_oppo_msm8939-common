@@ -87,6 +87,22 @@ service engineermode-sh /system/bin/sh /init.oppo.engineermode.sh
 #    user root
 #endif /* VENDOR_EDIT */
 
+#ifdef VENDOR_EDIT
+#hewei@Swdp. Android. boot&charge, 2014/08/05, modify for oppo startup & shutdown animation
+service bootanim /system/bin/bootanimation
+    class core
+    user root
+    group media graphics audio 
+    disabled
+    oneshot   
+service rbootanim /system/bin/bootanimation -r
+    class core
+    user root
+    group graphics audio media
+    disabled
+    oneshot
+#endif /* VENDOR_EDIT */
+
 #please add to init.oppo.rc
 #ifdef VENDOR_EDIT 
 #Horn@Swdp.Android.Boot_Charger  2014-7-30, Add for [oppo systme daemon]
@@ -125,7 +141,6 @@ service power-control /system/bin/sh /system/etc/init.oppo.qcom.power.sh &
 #ifdef VENDOR_EDIT
 #Peirs@Swdp.Android.FrameworkUi, 2014/07/30, add provide a function to indentify the usage of the phone.
 #recommend set in the stage of "on post-fs"
-on post-fs
     chmod 0660 /dev/block/bootdevice/by-name/reserve4
     chown root system /dev/block/bootdevice/by-name/reserve4
     chmod 0660 /dev/block/mmcblk0p36
