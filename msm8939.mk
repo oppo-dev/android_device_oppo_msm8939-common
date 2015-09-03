@@ -107,8 +107,8 @@ PRODUCT_PACKAGES += \
     make_ext4fs
 
 # Keystore
-#PRODUCT_PACKAGES += \
-#    keystore.msm8916
+PRODUCT_PACKAGES += \
+    keystore.msm8916
 
 # Lights
 PRODUCT_PACKAGES += \
