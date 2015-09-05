@@ -160,6 +160,7 @@ PRODUCT_PACKAGES += \
     init.qcom.syspart_fixup.sh \
     init.qcom.usb.sh \
     init.qcom.wcnss3660.sh \
+    init.qcom.wifi.sh \
     init.target.rc \
     ueventd.qcom.rc
 
