@@ -290,6 +290,13 @@ on post-fs-data
     chown system system /sys/oppo_ftm/als_prox/algo_info    
     chown system system /sys/oppo_ftm/als_prox/ps_min        
 
+    # Touchscreen
+    chown system radio /proc/touchpanel/double_tap_enable
+    chmod 0660 /proc/touchpanel/double_tap_enable
+
+    chown system system /sys/devices/virtual/graphics/fb0/cabc
+    chmod 0660 /sys/devices/virtual/graphics/fb0/cabc
+
 service logging /system/bin/sh logging.sh
     class main
     oneshot
