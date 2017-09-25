@@ -63,7 +63,7 @@ ENABLE_CPUSETS := true
 
 # Kernel
 BOARD_KERNEL_BASE := 0x80000000
-BOARD_KERNEL_CMDLINE := console=none androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1
+BOARD_KERNEL_CMDLINE := console=none androidboot.hardware=qcom msm_rtb.filter=0x237 ehci-hcd.park=3 androidboot.bootdevice=7824900.sdhci lpm_levels.sleep_disabled=1 androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --tags_offset 0x00000100
@@ -85,7 +85,8 @@ BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_FLUENCE := true
 AUDIO_FEATURE_ENABLED_KPI_OPTIMIZE := true
 AUDIO_FEATURE_ENABLED_NEW_SAMPLE_RATE := true
-USE_CUSTOM_AUDIO_POLICY := 1
+BOARD_USES_GENERIC_AUDIO := true
+TARGET_USES_QCOM_MM_AUDIO := true
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -100,6 +101,7 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 # Camera
 BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+TARGET_USES_NON_TREBLE_CAMERA := true
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
@@ -111,8 +113,10 @@ MAX_EGL_CACHE_SIZE := 2048*1024
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
-TARGET_USES_C2D_COMPOSITION := true
+TARGET_USES_GRALLOC1 := true
+TARGET_USES_HWC2 := true
 TARGET_USES_ION := true
+TARGET_USES_NEW_ION_API := true
 USE_OPENGL_RENDERER := true
 
 # Init
@@ -146,9 +150,11 @@ ifeq ($(WITH_TWRP),true)
 endif
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
+#include device/lineage/sepolicy/common/sepolicy.mk
+#include device/lineage/sepolicy/qcom/sepolicy.mk
+#include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
+#BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
 
 # Touchscreen
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"

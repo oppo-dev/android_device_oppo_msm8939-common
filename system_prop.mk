@@ -51,6 +51,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     audio_hal.period_size=192
 
+# Media
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.media.treble_omx=false
+
 # RIL
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.call_ring.multiple=false \
