@@ -146,7 +146,7 @@ endif
 # SELinux
 include device/qcom/sepolicy/sepolicy.mk
 
-BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
+#BOARD_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy
 
 # Touchscreen
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap_enable"
